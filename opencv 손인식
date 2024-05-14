@@ -1,0 +1,30 @@
+import cv2
+from cvzone.HandTrackingModule import HandDetector
+
+# 웹캠 연결
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)  # 프레임 너비 설정
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)  # 프레임 높이 설정
+
+# 손 감지기 초기화
+detector = HandDetector(maxHands=1, detectionCon=0.8)
+
+while True:
+    # 웹캠에서 프레임 가져오기
+    ret, img = cap.read()
+    if not ret:
+        break
+
+    # Hands 감지
+    hands, img = detector.findHands(img)
+
+    # 이미지 화면에 표시
+    cv2.imshow("Image", img)
+
+    # 'q' 키를 누르면 루프 종료
+    if cv2.waitKey(1) == ord("q"):
+        break
+
+# 리소스 해제
+cap.release()
+cv2.destroyAllWindows()
