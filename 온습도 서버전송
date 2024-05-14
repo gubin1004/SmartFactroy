@@ -1,0 +1,29 @@
+import Adafruit_DHT  # DHT 센서를 위한 라이브러리, 필요시 설치: pip install Adafruit_DHT
+import requests
+
+# 센서 종류 및 핀 설정
+sensor = Adafruit_DHT.DHT11
+pin = 2  # GPIO 핀 번호 (예시: BCM 핀 번호)
+
+# 센서에서 온습도 읽기
+humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+
+url = 'http://'  # 실제 서버 URL로 변경
+
+if humidity is not None and temperature is not None:
+    # 읽은 온습도 값 출력 (테스트용)
+    print(f'Temperature: {temperature:.1f}°C, Humidity: {humidity:.1f}%')
+
+    # 서버에 전송할 데이터 준비
+    data = {'temperature': temperature, 'humidity': humidity}
+
+    try:
+        response = requests.post(url, json=data)
+        print("Data sent to server:", response.text)
+    except Exception as e:
+        print("Failed to send data to server:", e)
+else:
+    print('Failed')
+
+print(response.status_code)
+print(response.json())
