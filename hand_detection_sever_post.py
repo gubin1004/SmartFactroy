@@ -17,7 +17,7 @@ detector = HandDetector(maxHands=1, detectionCon=0.8)
 previous_state = None  # 이전 상태 (None: 초기 상태, True: 손 감지됨, False: 손 감지되지 않음)
 
 # 서버 API 설정
-SERVER_URL = "http://192.168.0.93:8000/accountapp/hand_detection2/"
+SERVER_URL = "http://ip_address/accountapp/hand_detection2/"
 
 def send_data_to_server(value):
     try:
